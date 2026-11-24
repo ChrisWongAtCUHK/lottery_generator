@@ -1,10 +1,12 @@
 import 'dart:math';
+
 import 'package:material_ui/material_ui.dart';
 import 'package:flutter/services.dart';
 
 void main() {
   runApp(const LotteryGeneratorApp());
 }
+
 class LotteryGeneratorApp extends StatelessWidget {
   const LotteryGeneratorApp({super.key});
 
@@ -56,8 +58,43 @@ class _NumberGeneratorScreenState extends State<NumberGeneratorScreen> {
 
   // Optional: Color-code balls similar to Mark Six rules
   Color _getBallColor(int number) {
-    const redBalls = {1, 2, 7, 8, 12, 13, 18, 19, 23, 24, 29, 30, 34, 35, 40, 45, 46};
-    const blueBalls = {3, 4, 9, 10, 14, 15, 20, 25, 26, 31, 36, 37, 41, 42, 47, 48};
+    const redBalls = {
+      1,
+      2,
+      7,
+      8,
+      12,
+      13,
+      18,
+      19,
+      23,
+      24,
+      29,
+      30,
+      34,
+      35,
+      40,
+      45,
+      46,
+    };
+    const blueBalls = {
+      3,
+      4,
+      9,
+      10,
+      14,
+      15,
+      20,
+      25,
+      26,
+      31,
+      36,
+      37,
+      41,
+      42,
+      47,
+      48,
+    };
 
     if (redBalls.contains(number)) return Colors.red.shade600;
     if (blueBalls.contains(number)) return Colors.blue.shade600;
@@ -82,37 +119,42 @@ class _NumberGeneratorScreenState extends State<NumberGeneratorScreen> {
                 style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 32),
-              Wrap(
-                spacing: 12,
-                runSpacing: 12,
-                alignment: WrapAlignment.center,
-                children: _numbers.map((number) {
-                  return Container(
-                    width: 52,
-                    height: 52,
-                    decoration: BoxDecoration(
-                      color: _getBallColor(number),
-                      shape: BoxShape.circle,
-                      boxShadow: const [
-                        BoxShadow(
-                          color: Colors.black26,
-                          blurRadius: 4,
-                          offset: Offset(0, 2),
+              FittedBox(
+                fit: BoxFit.scaleDown,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: _numbers.map((number) {
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                      child: Container(
+                        width: 48,
+                        height: 48,
+                        decoration: BoxDecoration(
+                          color: _getBallColor(number),
+                          shape: BoxShape.circle,
+                          boxShadow: const [
+                            BoxShadow(
+                              color: Colors.black26,
+                              blurRadius: 4,
+                              offset: Offset(0, 2),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                    alignment: Alignment.center,
-                    child: Text(
-                      number.toString(),
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
+                        alignment: Alignment.center,
+                        child: Text(
+                          number.toString(),
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                       ),
-                    ),
-                  );
-                }).toList(),
+                    );
+                  }).toList(),
+                ),
               ),
+
               const SizedBox(height: 48),
               FilledButton.icon(
                 onPressed: _generateNumbers,
